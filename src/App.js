@@ -1,75 +1,84 @@
-import {
-  Routes,
-  Route,
-  Navigate
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import { useAuth } from "./context/AuthContext";
 
 import Login from "./pages/auth/Login";
+
 import Register from "./pages/auth/Register";
 
+import AdminLayout from "./layouts/AdminLayout";
+
+// ADMIN PAGES
+import DashboardPage from "./pages/admin/DashboardPage";
+
+import AppointmentsPage from "./pages/admin/AppointmentsPage";
+
+import PatientsPage from "./pages/admin/PatientsPage";
+
+import QueuePage from "./pages/admin/QueuePage";
+
+import PrescriptionsPage from "./pages/admin/PrescriptionsPage";
+
+import FollowUpsPage from "./pages/admin/FollowUpsPage";
+
+import NotificationsPage from "./pages/admin/NotificationsPage";
+
+// PATIENT
 import PatientDashboard from "./pages/patient/PatientDashboard";
 
-import AdminDashboard from "./pages/admin/AdminDashboard";
-
-import DoctorDashboard from "./pages/doctor/DoctorDashboard";
-
-import ProtectedRoute from "./routes/ProtectedRoute";
-
 function App() {
+  const { currentUser, userData } = useAuth();
 
   return (
-
     <Routes>
+      {/* LOGIN */}
+      <Route path="/login" element={<Login />} />
 
-      <Route
-        path="/"
-        element={<Navigate to="/login" />}
-      />
-
-      <Route
-        path="/login"
-        element={<Login />}
-      />
-
-      <Route
-        path="/register"
-        element={<Register />}
-      />
+      {/* REGISTER */}
+      <Route path="/register" element={<Register />} />
 
       {/* PATIENT */}
       <Route
         path="/patient"
         element={
-          <ProtectedRoute allowedRole="patient">
+          currentUser && userData?.role === "patient" ? (
             <PatientDashboard />
-          </ProtectedRoute>
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
 
-      {/* ADMIN */}
+      {/* ADMIN LAYOUT */}
       <Route
         path="/admin"
         element={
-          <ProtectedRoute allowedRole="admin">
-            <AdminDashboard />
-          </ProtectedRoute>
+          currentUser && userData?.role === "admin" ? (
+            <AdminLayout />
+          ) : (
+            <Navigate to="/login" />
+          )
         }
-      />
+      >
+        <Route path="dashboard" element={<DashboardPage />} />
 
-      {/* DOCTOR */}
-      <Route
-        path="/doctor"
-        element={
-          <ProtectedRoute allowedRole="doctor">
-            <DoctorDashboard />
-          </ProtectedRoute>
-        }
-      />
+        <Route path="appointments" element={<AppointmentsPage />} />
 
+        <Route path="patients" element={<PatientsPage />} />
+
+        <Route path="queue" element={<QueuePage />} />
+
+        <Route path="prescriptions" element={<PrescriptionsPage />} />
+
+        <Route path="followups" element={<FollowUpsPage />} />
+
+        <Route path="notifications" element={<NotificationsPage />} />
+      </Route>
+
+      {/* DEFAULT */}
+      <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
-
   );
-
 }
 
 export default App;
