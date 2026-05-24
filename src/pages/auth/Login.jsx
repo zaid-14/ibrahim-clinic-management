@@ -33,7 +33,7 @@ function Login() {
       if (userData.role === "patient") {
         navigate("/patient");
       } else if (userData.role === "doctor") {
-        navigate("/doctor");
+        navigate("/doctor/dashboard");
       } else if (userData.role === "admin") {
         navigate("/admin/dashboard");;
       }
@@ -46,7 +46,7 @@ function Login() {
     <div className="min-h-screen flex items-center justify-center bg-green-50">
       <div className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-green-700">
-          Patient Login
+          Login to your Account
         </h1>
 
         <form onSubmit={handleLogin} className="mt-6 space-y-4">

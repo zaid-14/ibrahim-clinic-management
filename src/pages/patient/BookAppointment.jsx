@@ -3,72 +3,141 @@ import { useState } from "react";
 import {
   addDoc,
   collection,
-  serverTimestamp
+  serverTimestamp,
+  query,
+  where,
+  getDocs
 } from "firebase/firestore";
 
-import {
-  db
-} from "../../firebase/config";
+import { db } from "../../firebase/config";
 
-import {
-  useAuth
-} from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
+
+import { generateSlots } from "../../utils/generateSlots";
 
 function BookAppointment() {
 
-  const { currentUser, userData } = useAuth();
+  const { currentUser, userData } =
+    useAuth();
 
-  const [date, setDate] = useState("");
+  const [date, setDate] =
+    useState("");
 
-  const [time, setTime] = useState("");
+  const [time, setTime] =
+    useState("");
 
-  const [symptoms, setSymptoms] = useState("");
+  const [symptoms, setSymptoms] =
+    useState("");
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] =
+    useState(false);
 
+  // GENERATED CLINIC SLOTS
+  const slots = generateSlots();
+
+  // HANDLE BOOKING
   const handleBooking = async (e) => {
 
     e.preventDefault();
+
+    // BLOCK SUNDAYS
+    const selectedDay =
+      new Date(date).getDay();
+
+    if (selectedDay === 0) {
+
+      alert(
+        "Clinic is closed on Sundays"
+      );
+
+      return;
+
+    }
 
     try {
 
       setLoading(true);
 
-      // Save Appointment
-await addDoc(collection(db, "appointments"), {
+      // CHECK DUPLICATE SLOT
+      const appointmentQuery =
+        query(
+          collection(
+            db,
+            "appointments"
+          ),
+          where("date", "==", date),
+          where("time", "==", time)
+        );
 
-  patientId: currentUser.uid,
+      const snapshot =
+        await getDocs(
+          appointmentQuery
+        );
 
-  patientName: userData?.name,
+      if (!snapshot.empty) {
 
-  patientEmail: userData?.email,
+        alert(
+          "This slot is already booked"
+        );
 
-  date,
+        setLoading(false);
 
-  time,
+        return;
 
-  symptoms,
+      }
 
-  status: "pending",
+      // SAVE APPOINTMENT
+      await addDoc(
+        collection(
+          db,
+          "appointments"
+        ),
+        {
 
-  createdAt: serverTimestamp()
+          patientId:
+            currentUser.uid,
 
-});
+          patientName:
+            userData?.name,
 
-// Create Notification
-await addDoc(collection(db, "notifications"), {
+          patientEmail:
+            userData?.email,
 
-  title: "New Appointment",
+          date,
 
-  message:
-    `${userData?.name} booked appointment for ${date} at ${time}`,
+          time,
 
-  createdAt: serverTimestamp()
+          symptoms,
 
-});
+          status: "pending",
 
-      alert("Appointment Booked Successfully");
+          createdAt:
+            serverTimestamp()
 
+        }
+      );
+
+      // CREATE NOTIFICATION
+      await addDoc(
+        collection(
+          db,
+          "notifications"
+        ),
+        {
+
+          title:
+            "New Appointment",
+
+          message:
+            `${userData?.name} booked appointment for ${date} at ${time}`,
+
+          createdAt:
+            serverTimestamp()
+
+        }
+      );
+
+      // RESET
       setDate("");
 
       setTime("");
@@ -116,14 +185,23 @@ await addDoc(collection(db, "notifications"), {
             className="w-full border p-3 rounded-lg"
             value={date}
             onChange={(e) =>
-              setDate(e.target.value)
+              setDate(
+                e.target.value
+              )
             }
+
+            min={
+              new Date()
+                .toISOString()
+                .split("T")[0]
+            }
+
             required
           />
 
         </div>
 
-        {/* TIME */}
+        {/* TIME SLOT */}
         <div>
 
           <label className="block mb-2 font-medium">
@@ -132,15 +210,40 @@ await addDoc(collection(db, "notifications"), {
 
           </label>
 
-          <input
-            type="time"
+          <select
             className="w-full border p-3 rounded-lg"
             value={time}
             onChange={(e) =>
-              setTime(e.target.value)
+              setTime(
+                e.target.value
+              )
             }
             required
-          />
+          >
+
+            <option value="">
+              Select Time Slot
+            </option>
+
+            {slots.map(
+              (
+                slot,
+                index
+              ) => (
+
+                <option
+                  key={index}
+                  value={slot}
+                >
+
+                  {slot}
+
+                </option>
+
+              )
+            )}
+
+          </select>
 
         </div>
 
@@ -159,7 +262,9 @@ await addDoc(collection(db, "notifications"), {
             placeholder="Enter symptoms..."
             value={symptoms}
             onChange={(e) =>
-              setSymptoms(e.target.value)
+              setSymptoms(
+                e.target.value
+              )
             }
           />
 
@@ -169,7 +274,11 @@ await addDoc(collection(db, "notifications"), {
         <button
           type="submit"
           disabled={loading}
-          className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
+          className="
+            bg-green-700 hover:bg-green-800
+            text-white px-6 py-3
+            rounded-lg
+          "
         >
 
           {loading

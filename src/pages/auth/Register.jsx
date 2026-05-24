@@ -81,7 +81,7 @@ function Register() {
 
         <h1 className="text-3xl font-bold text-center text-green-700">
 
-          Patient Register
+          Create a New Account
 
         </h1>
 
