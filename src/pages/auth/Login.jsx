@@ -5,6 +5,7 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { useNavigate, Link } from "react-router-dom";
+import clinicBanner from "../../assets/heroBannerBg.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -43,7 +44,15 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50">
+    <div
+  className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage: `linear-gradient(
+      rgba(0,0,0,0.55),
+      rgba(0,0,0,0.55)
+    ), url(${clinicBanner})`
+  }}
+>
       <div className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-green-700">
           Login to your Account
