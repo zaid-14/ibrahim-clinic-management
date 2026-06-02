@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
+import LandingPage from "./pages/shared/LandingPage";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import AdminLayout from "./layouts/AdminLayout";
@@ -29,10 +30,8 @@ function App() {
     <Routes>
       {/* LOGIN */}
       <Route path="/login" element={<Login />} />
-
       {/* REGISTER */}
       <Route path="/register" element={<Register />} />
-
       {/* PATIENT */}
       <Route
         path="/patient"
@@ -44,7 +43,6 @@ function App() {
           )
         }
       />
-
       {/* ADMIN LAYOUT */}
       <Route
         path="/admin"
@@ -70,7 +68,6 @@ function App() {
 
         <Route path="notifications" element={<NotificationsPage />} />
       </Route>
-
       {/* DOCTOR */}
       <Route
         path="/doctor"
@@ -89,8 +86,10 @@ function App() {
         <Route path="prescriptions" element={<DoctorPrescriptions />} />
       </Route>
 
-      {/* DEFAULT */}
-      <Route path="*" element={<Navigate to="/login" />} />
+      {/* LANDING PAGE */}
+      <Route path="/" element={<LandingPage />} />
+      {/* FALLBACK */}
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }
