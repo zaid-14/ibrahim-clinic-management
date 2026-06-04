@@ -28,8 +28,6 @@ function Login() {
 
       const userData = userDoc.data();
 
-      alert("Login Successful");
-
       // Redirect Based On Role
       if (userData.role === "patient") {
         navigate("/patient");

@@ -30,7 +30,7 @@ function AdminLayout () {
     try {
       await signOut(auth);
 
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       alert(error.message);
     }

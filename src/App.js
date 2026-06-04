@@ -39,7 +39,7 @@ function App() {
           currentUser && userData?.role === "patient" ? (
             <PatientDashboard />
           ) : (
-            <Navigate to="/login" />
+            <Navigate to="/" />
           )
         }
       />
@@ -50,7 +50,7 @@ function App() {
           currentUser && userData?.role === "admin" ? (
             <AdminLayout />
           ) : (
-            <Navigate to="/login" />
+            <Navigate to="/" />
           )
         }
       >
@@ -75,7 +75,7 @@ function App() {
           currentUser && userData?.role === "doctor" ? (
             <DoctorLayout />
           ) : (
-            <Navigate to="/login" />
+            <Navigate to="/" />
           )
         }
       >

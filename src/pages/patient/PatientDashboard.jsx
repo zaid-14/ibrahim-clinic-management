@@ -48,7 +48,7 @@ function PatientDashboard() {
 
         await signOut(auth);
 
-        navigate("/login");
+        navigate("/");
 
       } catch (error) {
 

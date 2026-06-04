@@ -45,7 +45,7 @@ function Register() {
         createdAt: serverTimestamp(),
       });
 
-      alert("Registration Successful");
+    
 
       navigate("/patient");
     } catch (error) {
