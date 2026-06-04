@@ -50,111 +50,260 @@ function AppointmentList() {
   }
 
   return (
-    <div
-      id="appointments"
-      className="bg-white mt-8 p-4 md:p-6 rounded-2xl shadow-md"
-    >
-      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
-        Appointment Management
-      </h2>
+  <div
+    id="appointments"
+    className="bg-white mt-8 p-4 md:p-6 rounded-2xl shadow-md"
+  >
+    <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
+      Appointment Management
+    </h2>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-[850px] w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="p-3 text-left">Patient</th>
-              <th className="p-3 text-left">Date</th>
-              <th className="p-3 text-left">Time</th>
-              <th className="p-3 text-left">Symptoms</th>
-              <th className="p-3 text-left">Status</th>
-              <th className="p-3 text-left">Actions</th>
-            </tr>
-          </thead>
+    {/* MOBILE CARDS */}
+    <div className="block md:hidden space-y-4">
 
-          <tbody>
-            {appointments.map((appointment) => (
-              <tr key={appointment.id} className="border-b">
-                <td className="p-3 font-medium">
-                  {appointment.patientName}
-                </td>
+      {appointments.map((appointment) => (
 
-                <td className="p-3 whitespace-nowrap">
-                  {appointment.date}
-                </td>
+        <div
+          key={appointment.id}
+          className="bg-gray-50 border rounded-xl p-4 shadow-sm"
+        >
 
-                <td className="p-3 whitespace-nowrap">
-                  {appointment.time}
-                </td>
+          <div className="flex justify-between items-start">
 
-                <td className="p-3 max-w-[250px]">
-                  {appointment.symptoms}
-                </td>
+            <div>
 
-                <td className="p-3">
-                  <span
-                    className={`
-                      px-3 py-1 rounded-full text-white text-xs md:text-sm
-                      ${
-                        appointment.status === "approved"
-                          ? "bg-green-500"
-                          : appointment.status === "rejected"
-                          ? "bg-red-500"
-                          : "bg-yellow-500"
-                      }
-                    `}
-                  >
-                    {appointment.status}
-                  </span>
-                </td>
+              <h3 className="font-bold text-lg">
+                {appointment.patientName}
+              </h3>
 
-                <td className="p-3">
-                  <div className="flex flex-col md:flex-row gap-2">
-                    <button
-                      onClick={() =>
-                        updateStatus(
-                          appointment.id,
-                          "approved"
-                        )
-                      }
-                      className="
-                        bg-green-600
-                        hover:bg-green-700
-                        text-white
-                        px-3 py-2
-                        rounded-lg
-                        text-sm
-                      "
-                    >
-                      Approve
-                    </button>
+              <p className="text-gray-500 text-sm mt-1">
+                {appointment.date}
+              </p>
 
-                    <button
-                      onClick={() =>
-                        updateStatus(
-                          appointment.id,
-                          "rejected"
-                        )
-                      }
-                      className="
-                        bg-red-500
-                        hover:bg-red-600
-                        text-white
-                        px-3 py-2
-                        rounded-lg
-                        text-sm
-                      "
-                    >
-                      Reject
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+              <p className="text-gray-500 text-sm">
+                {appointment.time}
+              </p>
+
+            </div>
+
+            <span
+              className={`
+                px-3 py-1 rounded-full text-white text-xs
+
+                ${
+                  appointment.status === "approved"
+                    ? "bg-green-500"
+                    : appointment.status === "rejected"
+                    ? "bg-red-500"
+                    : "bg-yellow-500"
+                }
+              `}
+            >
+              {appointment.status}
+            </span>
+
+          </div>
+
+          <div className="mt-4">
+
+            <p className="font-medium text-gray-700">
+              Symptoms
+            </p>
+
+            <p className="text-gray-600 mt-1">
+              {appointment.symptoms}
+            </p>
+
+          </div>
+
+          <div className="mt-4 flex gap-2">
+
+            <button
+              onClick={() =>
+                updateStatus(
+                  appointment.id,
+                  "approved"
+                )
+              }
+              className="
+                flex-1
+                bg-green-600
+                hover:bg-green-700
+                text-white
+                py-2
+                rounded-lg
+                text-sm
+              "
+            >
+              Approve
+            </button>
+
+            <button
+              onClick={() =>
+                updateStatus(
+                  appointment.id,
+                  "rejected"
+                )
+              }
+              className="
+                flex-1
+                bg-red-500
+                hover:bg-red-600
+                text-white
+                py-2
+                rounded-lg
+                text-sm
+              "
+            >
+              Reject
+            </button>
+
+          </div>
+
+        </div>
+
+      ))}
+
     </div>
-  );
+
+    {/* DESKTOP TABLE */}
+    <div className="hidden md:block overflow-x-auto">
+
+      <table className="w-full border-collapse">
+
+        <thead>
+
+          <tr className="bg-gray-100">
+
+            <th className="p-3 text-left">
+              Patient
+            </th>
+
+            <th className="p-3 text-left">
+              Date
+            </th>
+
+            <th className="p-3 text-left">
+              Time
+            </th>
+
+            <th className="p-3 text-left">
+              Symptoms
+            </th>
+
+            <th className="p-3 text-left">
+              Status
+            </th>
+
+            <th className="p-3 text-left">
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {appointments.map((appointment) => (
+
+            <tr
+              key={appointment.id}
+              className="border-b"
+            >
+
+              <td className="p-3">
+                {appointment.patientName}
+              </td>
+
+              <td className="p-3 whitespace-nowrap">
+                {appointment.date}
+              </td>
+
+              <td className="p-3 whitespace-nowrap">
+                {appointment.time}
+              </td>
+
+              <td className="p-3">
+                {appointment.symptoms}
+              </td>
+
+              <td className="p-3">
+
+                <span
+                  className={`
+                    px-3 py-1 rounded-full text-white text-sm
+
+                    ${
+                      appointment.status === "approved"
+                        ? "bg-green-500"
+                        : appointment.status === "rejected"
+                        ? "bg-red-500"
+                        : "bg-yellow-500"
+                    }
+                  `}
+                >
+                  {appointment.status}
+                </span>
+
+              </td>
+
+              <td className="p-3">
+
+                <div className="flex gap-2">
+
+                  <button
+                    onClick={() =>
+                      updateStatus(
+                        appointment.id,
+                        "approved"
+                      )
+                    }
+                    className="
+                      bg-green-600
+                      hover:bg-green-700
+                      text-white
+                      px-4 py-2
+                      rounded-lg
+                    "
+                  >
+                    Approve
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      updateStatus(
+                        appointment.id,
+                        "rejected"
+                      )
+                    }
+                    className="
+                      bg-red-500
+                      hover:bg-red-600
+                      text-white
+                      px-4 py-2
+                      rounded-lg
+                    "
+                  >
+                    Reject
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+);
 }
 
 export default AppointmentList;
