@@ -10,6 +10,8 @@ import { useNavigate, Link } from "react-router-dom";
 
 import clinicBanner from "../../assets/heroBannerBg.png";
 
+import Footer from "../../components/common/Footer";
+
 function Register() {
   const [name, setName] = useState("");
 
@@ -45,8 +47,6 @@ function Register() {
         createdAt: serverTimestamp(),
       });
 
-    
-
       navigate("/patient");
     } catch (error) {
       alert(error.message);
@@ -54,63 +54,66 @@ function Register() {
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `linear-gradient(
+    <div>
+      <div
+        className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `linear-gradient(
       rgba(0,0,0,0.55),
       rgba(0,0,0,0.55)
     ), url(${clinicBanner})`,
-      }}
-    >
-      <div className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center text-green-700">
-          Create a New Account
-        </h1>
+        }}
+      >
+        <div className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md">
+          <h1 className="text-3xl font-bold text-center text-green-700">
+            Create a New Account
+          </h1>
 
-        <form onSubmit={handleRegister} className="mt-6 space-y-4">
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="w-full border p-3 rounded-lg"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+          <form onSubmit={handleRegister} className="mt-6 space-y-4">
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="w-full border p-3 rounded-lg"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
 
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full border p-3 rounded-lg"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full border p-3 rounded-lg"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full border p-3 rounded-lg"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full border p-3 rounded-lg"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-          <button
-            type="submit"
-            className="w-full bg-green-700 text-white p-3 rounded-lg"
-          >
-            Register
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="w-full bg-green-700 text-white p-3 rounded-lg"
+            >
+              Register
+            </button>
+          </form>
 
-        <p className="mt-4 text-center">
-          Already have an account?{" "}
-          <Link to="/login" className="text-green-700 font-semibold">
-            Login
-          </Link>
-        </p>
+          <p className="mt-4 text-center">
+            Already have an account?{" "}
+            <Link to="/login" className="text-green-700 font-semibold">
+              Login
+            </Link>
+          </p>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

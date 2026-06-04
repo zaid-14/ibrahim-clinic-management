@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import clinicBanner from "../../assets/heroBannerBg.png";
+import Footer from "../../components/common/Footer";
 
 function LandingPage() {
   return (
@@ -119,6 +120,7 @@ function LandingPage() {
           <p className="mt-3 text-lg">Phone: 9022581631</p>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { useNavigate, Link } from "react-router-dom";
 import clinicBanner from "../../assets/heroBannerBg.png";
+import Footer from "../../components/common/Footer";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -34,7 +35,7 @@ function Login() {
       } else if (userData.role === "doctor") {
         navigate("/doctor/dashboard");
       } else if (userData.role === "admin") {
-        navigate("/admin/dashboard");;
+        navigate("/admin/dashboard");
       }
     } catch (error) {
       alert(error.message);
@@ -42,54 +43,57 @@ function Login() {
   };
 
   return (
-    <div
-  className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
-  style={{
-    backgroundImage: `linear-gradient(
+    <div>
+      <div
+        className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `linear-gradient(
       rgba(0,0,0,0.55),
       rgba(0,0,0,0.55)
-    ), url(${clinicBanner})`
-  }}
->
-      <div className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center text-green-700">
-          Login to your Account
-        </h1>
+    ), url(${clinicBanner})`,
+        }}
+      >
+        <div className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md">
+          <h1 className="text-3xl font-bold text-center text-green-700">
+            Login to your Account
+          </h1>
 
-        <form onSubmit={handleLogin} className="mt-6 space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full border p-3 rounded-lg"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <form onSubmit={handleLogin} className="mt-6 space-y-4">
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full border p-3 rounded-lg"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full border p-3 rounded-lg"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full border p-3 rounded-lg"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-          <button
-            type="submit"
-            className="w-full bg-green-700 text-white p-3 rounded-lg"
-          >
-            Login
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="w-full bg-green-700 text-white p-3 rounded-lg"
+            >
+              Login
+            </button>
+          </form>
 
-        <p className="mt-4 text-center">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-green-700 font-semibold">
-            Register
-          </Link>
-        </p>
+          <p className="mt-4 text-center">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-green-700 font-semibold">
+              Register
+            </Link>
+          </p>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }
