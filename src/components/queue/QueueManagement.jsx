@@ -120,7 +120,7 @@ function QueueManagement() {
     <div id="queue" className="bg-white mt-8 p-6 rounded-2xl shadow-md">
       {/* HEADER */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Queue Management</h2>
+        {/* <h2 className="text-2xl font-bold text-gray-800">Queue Management</h2> */}
 
         <button
           onClick={generateToken}

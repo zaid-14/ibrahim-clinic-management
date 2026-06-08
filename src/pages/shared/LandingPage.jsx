@@ -25,8 +25,7 @@ function LandingPage() {
           </p>
 
           <p className="mt-8 text-xl max-w-2xl">
-            Book appointments online, track appointment status, and receive
-            digital prescriptions from Ibrahim Clinic.
+            Providing the medical expertise you need and the personal attention you deserve, close to home
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">

@@ -43,89 +43,62 @@ function AppointmentList() {
 
   if (loading) {
     return (
-      <div className="text-center text-lg py-8">
-        Loading appointments...
-      </div>
+      <div className="text-center text-lg py-8">Loading appointments...</div>
     );
   }
 
   return (
-  <div
-    id="appointments"
-    className="bg-white mt-8 p-4 md:p-6 rounded-2xl shadow-md"
-  >
-    <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
-      Appointment Management
-    </h2>
+    <div
+      id="appointments"
+      className="bg-white mt-8 p-4 md:p-6 rounded-2xl shadow-md"
+    >
+      {/* <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
+        Manage Appointments
+      </h2> */}
 
-    {/* MOBILE CARDS */}
-    <div className="block md:hidden space-y-4">
+      {/* MOBILE CARDS */}
+      <div className="block md:hidden space-y-4">
+        {appointments.map((appointment) => (
+          <div
+            key={appointment.id}
+            className="bg-gray-50 border rounded-xl p-4 shadow-sm"
+          >
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-bold text-lg">{appointment.patientName}</h3>
 
-      {appointments.map((appointment) => (
+                <p className="text-gray-500 text-sm mt-1">{appointment.date}</p>
 
-        <div
-          key={appointment.id}
-          className="bg-gray-50 border rounded-xl p-4 shadow-sm"
-        >
+                <p className="text-gray-500 text-sm">{appointment.time}</p>
+              </div>
 
-          <div className="flex justify-between items-start">
-
-            <div>
-
-              <h3 className="font-bold text-lg">
-                {appointment.patientName}
-              </h3>
-
-              <p className="text-gray-500 text-sm mt-1">
-                {appointment.date}
-              </p>
-
-              <p className="text-gray-500 text-sm">
-                {appointment.time}
-              </p>
-
-            </div>
-
-            <span
-              className={`
+              <span
+                className={`
                 px-3 py-1 rounded-full text-white text-xs
 
                 ${
                   appointment.status === "approved"
                     ? "bg-green-500"
                     : appointment.status === "rejected"
-                    ? "bg-red-500"
-                    : "bg-yellow-500"
+                      ? "bg-red-500"
+                      : "bg-yellow-500"
                 }
               `}
-            >
-              {appointment.status}
-            </span>
+              >
+                {appointment.status}
+              </span>
+            </div>
 
-          </div>
+            <div className="mt-4">
+              <p className="font-medium text-gray-700">Symptoms</p>
 
-          <div className="mt-4">
+              <p className="text-gray-600 mt-1">{appointment.symptoms}</p>
+            </div>
 
-            <p className="font-medium text-gray-700">
-              Symptoms
-            </p>
-
-            <p className="text-gray-600 mt-1">
-              {appointment.symptoms}
-            </p>
-
-          </div>
-
-          <div className="mt-4 flex gap-2">
-
-            <button
-              onClick={() =>
-                updateStatus(
-                  appointment.id,
-                  "approved"
-                )
-              }
-              className="
+            <div className="mt-4 flex gap-2">
+              <button
+                onClick={() => updateStatus(appointment.id, "approved")}
+                className="
                 flex-1
                 bg-green-600
                 hover:bg-green-700
@@ -134,18 +107,13 @@ function AppointmentList() {
                 rounded-lg
                 text-sm
               "
-            >
-              Approve
-            </button>
+              >
+                Approve
+              </button>
 
-            <button
-              onClick={() =>
-                updateStatus(
-                  appointment.id,
-                  "rejected"
-                )
-              }
-              className="
+              <button
+                onClick={() => updateStatus(appointment.id, "rejected")}
+                className="
                 flex-1
                 bg-red-500
                 hover:bg-red-600
@@ -154,156 +122,98 @@ function AppointmentList() {
                 rounded-lg
                 text-sm
               "
-            >
-              Reject
-            </button>
-
+              >
+                Reject
+              </button>
+            </div>
           </div>
+        ))}
+      </div>
 
-        </div>
+      {/* DESKTOP TABLE */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="p-3 text-left">Patient</th>
 
-      ))}
+              <th className="p-3 text-left">Date</th>
 
-    </div>
+              <th className="p-3 text-left">Time</th>
 
-    {/* DESKTOP TABLE */}
-    <div className="hidden md:block overflow-x-auto">
+              <th className="p-3 text-left">Symptoms</th>
 
-      <table className="w-full border-collapse">
+              <th className="p-3 text-left">Status</th>
 
-        <thead>
+              <th className="p-3 text-left">Actions</th>
+            </tr>
+          </thead>
 
-          <tr className="bg-gray-100">
+          <tbody>
+            {appointments.map((appointment) => (
+              <tr key={appointment.id} className="border-b">
+                <td className="p-3">{appointment.patientName}</td>
 
-            <th className="p-3 text-left">
-              Patient
-            </th>
+                <td className="p-3 whitespace-nowrap">{appointment.date}</td>
 
-            <th className="p-3 text-left">
-              Date
-            </th>
+                <td className="p-3 whitespace-nowrap">{appointment.time}</td>
 
-            <th className="p-3 text-left">
-              Time
-            </th>
+                <td className="p-3">{appointment.symptoms}</td>
 
-            <th className="p-3 text-left">
-              Symptoms
-            </th>
-
-            <th className="p-3 text-left">
-              Status
-            </th>
-
-            <th className="p-3 text-left">
-              Actions
-            </th>
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          {appointments.map((appointment) => (
-
-            <tr
-              key={appointment.id}
-              className="border-b"
-            >
-
-              <td className="p-3">
-                {appointment.patientName}
-              </td>
-
-              <td className="p-3 whitespace-nowrap">
-                {appointment.date}
-              </td>
-
-              <td className="p-3 whitespace-nowrap">
-                {appointment.time}
-              </td>
-
-              <td className="p-3">
-                {appointment.symptoms}
-              </td>
-
-              <td className="p-3">
-
-                <span
-                  className={`
+                <td className="p-3">
+                  <span
+                    className={`
                     px-3 py-1 rounded-full text-white text-sm
 
                     ${
                       appointment.status === "approved"
                         ? "bg-green-500"
                         : appointment.status === "rejected"
-                        ? "bg-red-500"
-                        : "bg-yellow-500"
+                          ? "bg-red-500"
+                          : "bg-yellow-500"
                     }
                   `}
-                >
-                  {appointment.status}
-                </span>
+                  >
+                    {appointment.status}
+                  </span>
+                </td>
 
-              </td>
-
-              <td className="p-3">
-
-                <div className="flex gap-2">
-
-                  <button
-                    onClick={() =>
-                      updateStatus(
-                        appointment.id,
-                        "approved"
-                      )
-                    }
-                    className="
+                <td className="p-3">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => updateStatus(appointment.id, "approved")}
+                      className="
                       bg-green-600
                       hover:bg-green-700
                       text-white
                       px-4 py-2
                       rounded-lg
                     "
-                  >
-                    Approve
-                  </button>
+                    >
+                      Approve
+                    </button>
 
-                  <button
-                    onClick={() =>
-                      updateStatus(
-                        appointment.id,
-                        "rejected"
-                      )
-                    }
-                    className="
+                    <button
+                      onClick={() => updateStatus(appointment.id, "rejected")}
+                      className="
                       bg-red-500
                       hover:bg-red-600
                       text-white
                       px-4 py-2
                       rounded-lg
                     "
-                  >
-                    Reject
-                  </button>
-
-                </div>
-
-              </td>
-
-            </tr>
-
-          ))}
-
-        </tbody>
-
-      </table>
-
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-
-  </div>
-);
+  );
 }
 
 export default AppointmentList;

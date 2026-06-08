@@ -70,8 +70,8 @@ function PatientDashboard() {
             <div>
               <h1 className="text-4xl font-bold">Welcome, {userData?.name}</h1>
 
-              <p className="mt-3 text-green-100 text-lg">
-                Ibrahim Clinic Patient Portal
+              <p className="mt-3 text-green-100 text-xl">
+                Ibrahim Clinic
               </p>
             </div>
 

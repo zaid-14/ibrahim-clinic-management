@@ -30,7 +30,7 @@ function NotificationsPanel() {
   return (
     <div id="notifications" className="bg-white mt-8 p-6 rounded-2xl shadow-md">
       {/* TITLE */}
-      <h2 className="text-2xl font-bold text-gray-800">Live Notifications</h2>
+      {/* <h2 className="text-2xl font-bold text-gray-800">Live Notifications</h2> */}
 
       {/* LIST */}
       <div className="mt-6 space-y-4">

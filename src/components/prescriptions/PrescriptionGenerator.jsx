@@ -70,7 +70,7 @@ function PrescriptionGenerator() {
   return (
     <div id="prescriptions" className="bg-white mt-8 p-6 rounded-2xl shadow-md">
       <h2 className="text-2xl font-bold text-gray-800">
-        Prescription Generator
+        Enter patient details
       </h2>
 
       <div className="mt-6 space-y-4">
